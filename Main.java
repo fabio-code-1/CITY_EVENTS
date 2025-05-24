@@ -13,15 +13,16 @@ public class Main {
       System.out.printf("%-5s | %-30s%n", "Opção", "Descrição");
       System.out.println("------+--------------------------------");
 
-      System.out.printf("%-5d | %-30s%n", 1, "Cadastrar usuário");
-      System.out.printf("%-5d | %-30s%n", 2, "Cadastrar evento");
-      System.out.printf("%-5d | %-30s%n", 3, "Listar eventos disponíveis");
-      System.out.printf("%-5d | %-30s%n", 4, "Confirmar participação");
-      System.out.printf("%-5d | %-30s%n", 5, "Cancelar participação");
-      System.out.printf("%-5d | %-30s%n", 6, "Ver eventos confirmados");
-      System.out.printf("%-5d | %-30s%n", 7, "Ver eventos em andamento");
-      System.out.printf("%-5d | %-30s%n", 8, "Ver eventos passados");
-      System.out.printf("%-5d | %-30s%n", 9, "Sair");
+      System.out.printf("%-5d | %-30s%n", 1, "Login");
+      System.out.printf("%-5d | %-30s%n", 2, "Cadastrar usuário");
+      // System.out.printf("%-5d | %-30s%n", 2, "Cadastrar evento");
+      // System.out.printf("%-5d | %-30s%n", 3, "Listar eventos disponíveis");
+      // System.out.printf("%-5d | %-30s%n", 4, "Confirmar participação");
+      // System.out.printf("%-5d | %-30s%n", 5, "Cancelar participação");
+      // System.out.printf("%-5d | %-30s%n", 6, "Ver eventos confirmados");
+      // System.out.printf("%-5d | %-30s%n", 7, "Ver eventos em andamento");
+      // System.out.printf("%-5d | %-30s%n", 8, "Ver eventos passados");
+      System.out.printf("%-5d | %-30s%n", 3, "Sair");
 
       System.out.print("Digite o número da opção: "); // print sem quebra de linha
 
@@ -56,7 +57,7 @@ public class Main {
         scanner.nextLine(); // limpa entrada inválida
       }
 
-    } while (opcaoMenu != 9);
+    } while (opcaoMenu != 3);
 
     scanner.close(); // fechar o leitor
     return true;
