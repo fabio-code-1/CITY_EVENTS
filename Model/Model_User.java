@@ -61,4 +61,22 @@ public class Model_User {
     }
   }
 
+  public static boolean autenticar(String nome, String senha) {
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader("DB/usuarios.data"));
+      String linha;
+      while ((linha = reader.readLine()) != null) {
+        String[] partes = linha.split("\\|");
+        if (partes[0].equals(nome) && partes[1].equals(senha)) {
+          reader.close();
+          return true; // login válido
+        }
+      }
+      reader.close();
+    } catch (IOException e) {
+      System.out.println("Erro ao acessar o arquivo: " + e.getMessage());
+    }
+    return false; // se não encontrou
+  }
+
 }

@@ -34,7 +34,18 @@ public class Main {
 
         switch (opcaoMenu) {
           case 1:
-            System.out.println("===== LOGIN =====");
+            System.out.print("Digite o nome de usuário: ");
+            String nome = scanner.nextLine();
+
+            System.out.print("Digite a senha: ");
+            String senha = scanner.nextLine();
+
+            if (Model_User.autenticar(nome, senha)) {
+              System.out.println("Login realizado com sucesso!\n");
+              Login.menu_login(nome, scanner); // chama menu após login
+            } else {
+              System.out.println("Nome ou senha inválidos!\n");
+            }
             break;
 
           case 2:
