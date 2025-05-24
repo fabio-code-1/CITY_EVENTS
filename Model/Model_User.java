@@ -4,7 +4,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.Console;
+import java.io.File;
 import java.io.FileReader;
 
 public class Model_User {
@@ -77,6 +79,42 @@ public class Model_User {
       System.out.println("Erro ao acessar o arquivo: " + e.getMessage());
     }
     return false; // se não encontrou
+  }
+
+  public static boolean excluirConta(String nome, String senha) {
+    File original = new File("DB/usuarios.data");
+    File temporario = new File("DB/temp.data");
+    boolean excluiu = false;
+
+    try (
+        BufferedReader reader = new BufferedReader(new FileReader(original));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(temporario))) {
+
+      String linha;
+      while ((linha = reader.readLine()) != null) {
+        String[] partes = linha.split("\\|");
+        if (partes[0].equals(nome) && partes[1].equals(senha)) {
+          excluiu = true; // achou e vai excluir (não escreve no novo)
+          continue;
+        }
+        writer.write(linha);
+        writer.newLine();
+      }
+
+      reader.close();
+      writer.close();
+
+      if (original.delete() && temporario.renameTo(original)) {
+        return excluiu;
+      } else {
+        System.out.println("Erro ao atualizar o arquivo de usuários.");
+      }
+
+    } catch (IOException e) {
+      System.out.println("Erro ao excluir conta: " + e.getMessage());
+    }
+
+    return false;
   }
 
 }

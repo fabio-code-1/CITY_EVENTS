@@ -15,13 +15,6 @@ public class Main {
 
       System.out.printf("%-5d | %-30s%n", 1, "Login");
       System.out.printf("%-5d | %-30s%n", 2, "Cadastrar usuário");
-      // System.out.printf("%-5d | %-30s%n", 2, "Cadastrar evento");
-      // System.out.printf("%-5d | %-30s%n", 3, "Listar eventos disponíveis");
-      // System.out.printf("%-5d | %-30s%n", 4, "Confirmar participação");
-      // System.out.printf("%-5d | %-30s%n", 5, "Cancelar participação");
-      // System.out.printf("%-5d | %-30s%n", 6, "Ver eventos confirmados");
-      // System.out.printf("%-5d | %-30s%n", 7, "Ver eventos em andamento");
-      // System.out.printf("%-5d | %-30s%n", 8, "Ver eventos passados");
       System.out.printf("%-5d | %-30s%n", 3, "Sair");
 
       System.out.print("Digite o número da opção: "); // print sem quebra de linha
@@ -42,7 +35,7 @@ public class Main {
 
             if (Model_User.autenticar(nome, senha)) {
               System.out.println("Login realizado com sucesso!\n");
-              Login.menu_login(nome, scanner); // chama menu após login
+              Login.menu_login(nome, senha, scanner); // chama menu após login
             } else {
               System.out.println("Nome ou senha inválidos!\n");
             }

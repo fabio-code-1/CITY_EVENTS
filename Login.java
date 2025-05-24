@@ -4,7 +4,7 @@ import Model.Model_User;
 
 public class Login {
 
-  public static boolean menu_login(String nomeUsuario, Scanner scanner) {
+  public static boolean menu_login(String nomeUsuario, String senhaUsuario, Scanner scanner) {
 
     int opcaoMenu = -1;
 
@@ -22,7 +22,8 @@ public class Login {
       System.out.printf("%-5d | %-30s%n", 5, "Ver eventos confirmados");
       System.out.printf("%-5d | %-30s%n", 6, "Ver eventos em andamento");
       System.out.printf("%-5d | %-30s%n", 7, "Ver eventos passados");
-      System.out.printf("%-5d | %-30s%n", 8, "Logout");
+      System.out.printf("%-5d | %-30s%n", 8, "Excluir conta");
+      System.out.printf("%-5d | %-30s%n", 9, "Logout");
 
       System.out.print("Digite o número da opção: "); // print sem quebra de linha
 
@@ -44,6 +45,22 @@ public class Login {
             break;
 
           case 8:
+            System.out.print("Tem certeza que deseja excluir sua conta? (s/n): ");
+            String confirmacao = scanner.nextLine();
+
+            if (confirmacao.equalsIgnoreCase("s")) {
+              if (Model_User.excluirConta(nomeUsuario, senhaUsuario)) {
+                System.out.println("Conta excluída com sucesso!");
+                opcaoMenu = 9; // força logout
+              } else {
+                System.out.println("Erro: não foi possível excluir sua conta.");
+              }
+            } else {
+              System.out.println("Operação cancelada.");
+            }
+            break;
+
+          case 9:
             System.out.println("Saindo do programa...");
             break;
 
@@ -57,7 +74,7 @@ public class Login {
         scanner.nextLine(); // limpa entrada inválida
       }
 
-    } while (opcaoMenu != 8);
+    } while (opcaoMenu != 9);
 
     return true;
   }

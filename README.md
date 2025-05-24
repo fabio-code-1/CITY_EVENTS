@@ -17,7 +17,7 @@ Projeto desenvolvido como atividade prática da unidade curricular de programaç
 - Login/Logout ✅
 - Cadastro de usuários ✅
 - Verificação de cadastro _nome_ e _senha_ existente ("Teste" ≠ "teste": diferentes) ✅
-- Excluir conta
+- Excluir conta ✅
 - Cadastro de eventos (com nome, endereço, categoria, horário e descrição)
 - Listagem de eventos disponíveis
 - Confirmação e cancelamento de participação
