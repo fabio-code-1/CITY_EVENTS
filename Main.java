@@ -33,12 +33,16 @@ public class Main {
 
         switch (opcaoMenu) {
           case 1:
+            System.out.println("===== LOGIN =====");
+            break;
+
+          case 2:
             System.out.println("===== CADASTRO DE USUARIO =====");
             Model_User usuario = new Model_User(scanner); // passa o scanner como parâmetro
             usuario.salvarEmArquivo();
             break;
 
-          case 9:
+          case 3:
             System.out.println("Saindo do programa...");
             break;
 

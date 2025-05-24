@@ -14,7 +14,10 @@ Projeto desenvolvido como atividade prática da unidade curricular de programaç
 
 ## 📚 Funcionalidades
 
-- Cadastro de usuários
+- Login/Logout
+- Cadastro de usuários ✅
+- Verificação de cadastro já existente
+- Excluir conta
 - Cadastro de eventos (com nome, endereço, categoria, horário e descrição)
 - Listagem de eventos disponíveis
 - Confirmação e cancelamento de participação
