@@ -13,8 +13,9 @@ public class Model_Eventos {
   private String data;
   private String horario;
   private String descricao;
+  private String criador;
 
-  public Model_Eventos(Scanner scanner) {
+  public Model_Eventos(Scanner scanner, String criador) {
     System.out.print("Digite o nome do evento: ");
     this.nome = scanner.nextLine();
 
@@ -32,6 +33,8 @@ public class Model_Eventos {
 
     System.out.print("Descrição do evento: ");
     this.descricao = scanner.nextLine();
+
+    this.criador = criador;
   }
 
   public void salvarEmArquivo() {
@@ -59,7 +62,8 @@ public class Model_Eventos {
 
       // 2. Salva se não existir
       FileWriter writer = new FileWriter("DB/events.data", true);
-      writer.write(nome + "|" + endereco + "|" + categoria + "|" + data + "|" + horario + "|" + descricao + "\n");
+      writer.write(nome + "|" + endereco + "|" + categoria + "|" + data + "|" + horario + "|" + descricao + "|"
+          + criador + "\n");
       writer.close();
 
       System.out.println("Usuario salvo com sucesso!\n");

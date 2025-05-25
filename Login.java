@@ -37,7 +37,7 @@ public class Login {
         switch (opcaoMenu) {
           case 1:
             System.out.println("===== CADASTRAR EVENTO =====");
-            Model_Eventos evento = new Model_Eventos(scanner); // passa o scanner como parâmetro
+            Model_Eventos evento = new Model_Eventos(scanner, nomeUsuario); // passa o scanner como parâmetro
             evento.salvarEmArquivo();
             break;
 
