@@ -18,7 +18,8 @@ Projeto desenvolvido como atividade prática da unidade curricular de programaç
 - Cadastro de usuários ✅
 - Verificação de cadastro _nome_ e _senha_ existente ("Teste" ≠ "teste": diferentes) ✅
 - Excluir conta ✅
-- Cadastro de eventos (com nome, endereço, categoria, horário e descrição)
+- Cadastro de eventos (nome, endereço, categoria, data, horário e descrição) ✅
+- Verificação de cadastro de evento _nome_, _endereço_ e _data_ existente ("Teste" ≠ "teste": diferentes) ✅
 - Listagem de eventos disponíveis
 - Confirmação e cancelamento de participação
 - Identificação de eventos ocorrendo no momento ou já passados
@@ -33,9 +34,11 @@ Projeto desenvolvido como atividade prática da unidade curricular de programaç
 - `EventoService`
 - `UsuarioService`
 - `Main` (menu de console)
+- `Login` (menu de console)
 
 ## 💾 Persistência
 
+Os usuários são salvos em um arquivo chamado `usuarios.data`, que será carregado automaticamente ao iniciar o programa.
 Os eventos são salvos em um arquivo chamado `events.data`, que será carregado automaticamente ao iniciar o programa.
 
 ## 📊 Diagrama de Classes

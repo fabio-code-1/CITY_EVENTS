@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 import Model.Model_User;
 
@@ -6,6 +8,22 @@ public class Main {
   private static boolean menu() {
     int opcaoMenu = -1;
     Scanner scanner = new Scanner(System.in); // cria o leitor
+
+    try {
+      File usuario = new File("DB/usuarios.data");
+      File events = new File("DB/events.data");
+      if (!events.exists()) {
+        // cria o arquivo vazio se não existir
+        events.createNewFile();
+      }
+
+      if (!usuario.exists()) {
+        usuario.createNewFile();
+      }
+    } catch (IOException e) {
+      System.out.println("Erro ao criar o arquivo: " + e.getMessage());
+      return false; // encerra o menu se der erro
+    }
 
     do {
       System.out.println("===== MENU PRINCIPAL =====");

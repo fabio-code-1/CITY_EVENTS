@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+import Model.Model_Eventos;
 import Model.Model_User;
 
 public class Login {
@@ -36,12 +37,12 @@ public class Login {
         switch (opcaoMenu) {
           case 1:
             System.out.println("===== CADASTRAR EVENTO =====");
+            Model_Eventos evento = new Model_Eventos(scanner); // passa o scanner como parâmetro
+            evento.salvarEmArquivo();
             break;
 
           case 2:
             System.out.println("===== LISTAR EVENTOS =====");
-            Model_User usuario = new Model_User(scanner); // passa o scanner como parâmetro
-            usuario.salvarEmArquivo();
             break;
 
           case 8:
