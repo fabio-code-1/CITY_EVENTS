@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -72,4 +73,37 @@ public class Model_Eventos {
       System.out.println("Erro ao acessar o arquivo: " + e.getMessage());
     }
   }
+
+  public static void listarEventos() {
+    File arquivo = new File("DB/events.data");
+
+    if (!arquivo.exists() || arquivo.length() == 0) {
+      System.out.println("Nenhum evento cadastrado.");
+      return;
+    }
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
+      String linha;
+      int contador = 1;
+
+      while ((linha = reader.readLine()) != null) {
+        String[] partes = linha.split("\\|");
+        if (partes.length >= 6) {
+          System.out.println("Evento " + contador++);
+          System.out.println("Nome: " + partes[0]);
+          System.out.println("Endereço: " + partes[1]);
+          System.out.println("Categoria: " + partes[2]);
+          System.out.println("Data: " + partes[3]);
+          System.out.println("Horário: " + partes[4]);
+          System.out.println("Descrição: " + partes[5]);
+          System.out.println("Criado por: " + partes[6]);
+          System.out.println("-----------------------------");
+        }
+      }
+
+    } catch (IOException e) {
+      System.out.println("Erro ao ler eventos: " + e.getMessage());
+    }
+  }
+
 }

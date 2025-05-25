@@ -43,6 +43,7 @@ public class Login {
 
           case 2:
             System.out.println("===== LISTAR EVENTOS =====");
+            Model_Eventos.listarEventos();
             break;
 
           case 8:
