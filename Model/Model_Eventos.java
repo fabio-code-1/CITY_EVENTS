@@ -104,6 +104,9 @@ public class Model_Eventos {
   }
 
   public static void listarEventos() {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    LocalDateTime agora = LocalDateTime.now();
+
     File arquivo = new File("DB/events.data");
 
     if (!arquivo.exists() || arquivo.length() == 0) {
@@ -111,8 +114,7 @@ public class Model_Eventos {
       return;
     }
 
-    // Cria uma lista que vai guardar todas as linhas do arquivo já separadas (por
-    // "|").
+    // Cria uma lista que vai guardar todas as linhas do arquivo já separadas ("|")
     // Cada item da lista representa um evento completo, onde as informações estão
     // em um vetor de Strings.
     List<String[]> eventos = new ArrayList<>();
@@ -129,7 +131,6 @@ public class Model_Eventos {
 
       // Ordenar por data e hora (convertendo para LocalDateTime)
       eventos.sort((a, b) -> {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         try {
           LocalDateTime dataHoraA = LocalDateTime.parse(a[3] + " " + a[4], formatter);
           LocalDateTime dataHoraB = LocalDateTime.parse(b[3] + " " + b[4], formatter);
@@ -140,15 +141,35 @@ public class Model_Eventos {
       });
 
       int i = 1;
+
       for (String[] e : eventos) {
+        LocalDateTime dataHora = LocalDateTime.parse(e[3] + " " + e[4], formatter);
+
         System.out.println("Criado por: " + e[6]);
-        System.out.println("Evento " + i++);
         System.out.println("Nome: " + e[0]);
         System.out.println("Endereço: " + e[1]);
         System.out.println("Categoria: " + e[2]);
         System.out.println("Data: " + e[3]);
         System.out.println("Horário: " + e[4]);
         System.out.println("Descrição: " + e[5]);
+
+        // Verificação do status
+        if (dataHora.isBefore(agora)) {
+          if (dataHora.toLocalDate().equals(agora.toLocalDate())) {
+            System.out.println("Status: Evento HOJE (mas já passou o horário)");
+          } else {
+            System.out.println("Status: Evento já passou");
+          }
+        } else if (dataHora.toLocalDate().equals(agora.toLocalDate())) {
+          if (dataHora.getHour() == agora.getHour()) {
+            System.out.println("Status: Evento acontecendo agora");
+          } else {
+            System.out.println("Status: Evento HOJE (mais tarde)");
+          }
+        } else {
+          System.out.println("Status: Evento futuro");
+        }
+
         System.out.println("-----------------------------");
       }
 

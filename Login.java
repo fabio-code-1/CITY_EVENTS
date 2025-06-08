@@ -20,9 +20,6 @@ public class Login {
       System.out.printf("%-5d | %-30s%n", 2, "Listar eventos disponíveis");
       System.out.printf("%-5d | %-30s%n", 3, "Confirmar participação");
       System.out.printf("%-5d | %-30s%n", 4, "Cancelar participação");
-      System.out.printf("%-5d | %-30s%n", 5, "Ver eventos confirmados");
-      System.out.printf("%-5d | %-30s%n", 6, "Ver eventos em andamento");
-      System.out.printf("%-5d | %-30s%n", 7, "Ver eventos passados");
       System.out.printf("%-5d | %-30s%n", 8, "Excluir conta");
       System.out.printf("%-5d | %-30s%n", 9, "Logout");
 
