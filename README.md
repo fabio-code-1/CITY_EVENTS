@@ -21,6 +21,7 @@ Projeto desenvolvido como atividade prática da unidade curricular de programaç
 - Cadastro de eventos (nome, endereço, categoria, data, horário, descrição, criador) ✅
 - Verificação de cadastro de evento _nome_, _endereço_ e _data_ existente ("Teste" ≠ "teste": diferentes) ✅
 - Listagem de eventos disponíveis ✅
+- Listagem de eventos que o usuário está participando ✅
 - Confirmação e cancelamento de participação ✅
 - Identificação de eventos ocorrendo no momento ou já passados ✅
 - Ordenação de eventos por data e hora ✅

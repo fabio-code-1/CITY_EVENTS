@@ -43,13 +43,13 @@ public class Model_Eventos {
         this.data = dataValida.format(formatter); // armazena como String formatada
         break;
       } catch (DateTimeParseException e) {
-        System.out.println("Formato inválido. Digite a data no formato dd/MM/yyyy.");
+        System.out.println("Formato invalido. Digite a data no formato dd/MM/yyyy.");
       }
     }
 
     DateTimeFormatter horarioFormatter = DateTimeFormatter.ofPattern("HH:mm");
     while (true) {
-      System.out.print("Horário de início do evento (ex: 14:30): ");
+      System.out.print("Horario de início do evento (ex: 14:30): ");
       String entradaHorario = scanner.nextLine();
 
       try {
@@ -57,7 +57,7 @@ public class Model_Eventos {
         this.horario = horarioValido.format(horarioFormatter); // armazena como String formatada
         break;
       } catch (DateTimeParseException e) {
-        System.out.println("Formato inválido. Digite o horário no formato HH:mm.");
+        System.out.println("Formato invalido. Digite o horario no formato HH:mm.");
       }
     }
 
@@ -69,18 +69,18 @@ public class Model_Eventos {
 
   public void salvarEmArquivo() {
     try {
-      // 1. Verifica se o evento já existe
+      // 1. Verifica se o evento ja existe
       BufferedReader reader = new BufferedReader(new FileReader("DB/events.data"));
       String linha;
       String participantes = "[" + criador + "]";
       boolean existe = false;
 
-      // /// Verifica se o nome do evento já existe no arquivo
+      // /// Verifica se o nome do evento ja existe no arquivo
       while ((linha = reader.readLine()) != null) {
         String[] partes = linha.split("\\|"); // separa nome e senha
         if (partes[0].equals(nome) && partes[1].equals(endereco) && partes[3].equals(data)) {
           existe = true;
-          break; // já achou, pode parar
+          break; // ja achou, pode parar
         }
       }
 
@@ -115,7 +115,7 @@ public class Model_Eventos {
       return;
     }
 
-    // Cria uma lista que vai guardar todas as linhas do arquivo já separadas ("|")
+    // Cria uma lista que vai guardar todas as linhas do arquivo ja separadas ("|")
     // Cada item da lista representa um evento completo, onde as informacoes estao
     // em um vetor de Strings.
     List<String[]> eventos = new ArrayList<>();
@@ -149,15 +149,15 @@ public class Model_Eventos {
         System.out.println("Endereco: " + e[1]);
         System.out.println("Categoria: " + e[2]);
         System.out.println("Data: " + e[3]);
-        System.out.println("Horário: " + e[4]);
+        System.out.println("Horario: " + e[4]);
         System.out.println("Descricao: " + e[5]);
 
         // Verificacao do status
         if (dataHora.isBefore(agora)) {
           if (dataHora.toLocalDate().equals(agora.toLocalDate())) {
-            System.out.println("Status: Evento HOJE (mas já passou o horário)");
+            System.out.println("Status: Evento HOJE (mas ja passou o horario)");
           } else {
-            System.out.println("Status: Evento já passou");
+            System.out.println("Status: Evento ja passou");
           }
         } else if (dataHora.toLocalDate().equals(agora.toLocalDate())) {
           if (dataHora.getHour() == agora.getHour()) {
@@ -319,6 +319,61 @@ public class Model_Eventos {
 
     if (!encontrou) {
       System.out.println("Evento nao encontrado.");
+    }
+  }
+
+  public static void listarEventosDoUsuario(String nomeUsuario) {
+    File arquivo = new File("DB/events.data");
+
+    if (!arquivo.exists() || arquivo.length() == 0) {
+      System.out.println("Nenhum evento cadastrado.");
+      return;
+    }
+
+    boolean encontrouAlgum = false;
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
+      String linha;
+
+      while ((linha = reader.readLine()) != null) {
+        String[] partes = linha.split("\\|");
+
+        if (partes.length >= 8) {
+          String participantes = partes[7];
+
+          // Garante que esta entre colchetes
+          if (!participantes.startsWith("["))
+            participantes = "[" + participantes;
+          if (!participantes.endsWith("]"))
+            participantes = participantes + "]";
+
+          String nomesSemColchetes = participantes.replace("[", "").replace("]", "");
+          String[] nomes = nomesSemColchetes.split(",");
+
+          for (String nome : nomes) {
+            if (nome.trim().equalsIgnoreCase(nomeUsuario)) {
+              System.out.println("Nome: " + partes[0]);
+              System.out.println("Endereco: " + partes[1]);
+              System.out.println("Categoria: " + partes[2]);
+              System.out.println("Data: " + partes[3]);
+              System.out.println("Horario: " + partes[4]);
+              System.out.println("Descricao: " + partes[5]);
+              System.out.println("Criado por: " + partes[6]);
+              System.out.println("Participantes: " + partes[7]);
+              System.out.println("-----------------------------");
+              encontrouAlgum = true;
+              break;
+            }
+          }
+        }
+      }
+
+    } catch (IOException e) {
+      System.out.println("Erro ao ler os eventos: " + e.getMessage());
+    }
+
+    if (!encontrouAlgum) {
+      System.out.println("Voce nao esta participando de nenhum evento.");
     }
   }
 

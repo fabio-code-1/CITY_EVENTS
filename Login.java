@@ -9,23 +9,24 @@ public class Login {
 
     int opcaoMenu = -1;
 
-    // menu pós-login com saudação
+    // menu pós-login com saudacao
     System.out.println("===== Bem-vindo, " + nomeUsuario + " =====");
 
     do {
-      System.out.printf("%-5s | %-30s%n", "Opção", "Descrição");
+      System.out.printf("%-5s | %-30s%n", "Opcao", "Descricao");
       System.out.println("------+--------------------------------");
 
       System.out.printf("%-5d | %-30s%n", 1, "Cadastrar evento");
-      System.out.printf("%-5d | %-30s%n", 2, "Listar eventos disponíveis");
-      System.out.printf("%-5d | %-30s%n", 3, "Confirmar participação");
-      System.out.printf("%-5d | %-30s%n", 4, "Cancelar participação");
+      System.out.printf("%-5d | %-30s%n", 2, "Listar eventos disponiveis");
+      System.out.printf("%-5d | %-30s%n", 3, "Confirmar participacao");
+      System.out.printf("%-5d | %-30s%n", 4, "Cancelar participacao");
+      System.out.printf("%-5d | %-30s%n", 5, "Lista partipacoes confirmadas");
       System.out.printf("%-5d | %-30s%n", 8, "Excluir conta");
       System.out.printf("%-5d | %-30s%n", 9, "Logout");
 
-      System.out.print("Digite o número da opção: "); // print sem quebra de linha
+      System.out.print("Digite o numero da opcao: "); // print sem quebra de linha
 
-      // Verifica se a entrada é um número inteiro
+      // Verifica se a entrada é um numero inteiro
       if (scanner.hasNextInt()) {
         opcaoMenu = scanner.nextInt();
         System.out.printf("Escolheu [%d]%n\n\n\n", opcaoMenu);
@@ -53,19 +54,24 @@ public class Login {
             Model_Eventos.cancelarPresenca(scanner, nomeUsuario);
             break;
 
+          case 5:
+            System.out.println("===== LISTAR PARTICIPACOES CONFIRMADAS  =====");
+            Model_Eventos.listarEventosDoUsuario(nomeUsuario);
+            break;
+
           case 8:
             System.out.print("Tem certeza que deseja excluir sua conta? (s/n): ");
             String confirmacao = scanner.nextLine();
 
             if (confirmacao.equalsIgnoreCase("s")) {
               if (Model_User.excluirConta(nomeUsuario, senhaUsuario)) {
-                System.out.println("Conta excluída com sucesso!");
+                System.out.println("Conta excluida com sucesso!");
                 opcaoMenu = 9; // força logout
               } else {
-                System.out.println("Erro: não foi possível excluir sua conta.");
+                System.out.println("Erro: nao foi possivel excluir sua conta.");
               }
             } else {
-              System.out.println("Operação cancelada.");
+              System.out.println("Operacao cancelada.");
             }
             break;
 
@@ -74,13 +80,13 @@ public class Login {
             break;
 
           default:
-            System.out.println("Erro: opção inválida!");
+            System.out.println("Erro: opcao invalida!");
             opcaoMenu = -1; // força repetir o loop
         }
 
       } else {
-        System.out.println("Entrada inválida! Digite apenas números.");
-        scanner.nextLine(); // limpa entrada inválida
+        System.out.println("Entrada invalida! Digite apenas numeros.");
+        scanner.nextLine(); // limpa entrada invalida
       }
 
     } while (opcaoMenu != 9);
