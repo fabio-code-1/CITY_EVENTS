@@ -140,8 +140,6 @@ public class Model_Eventos {
         }
       });
 
-      int i = 1;
-
       for (String[] e : eventos) {
         LocalDateTime dataHora = LocalDateTime.parse(e[3] + " " + e[4], formatter);
 
