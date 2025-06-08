@@ -10,7 +10,7 @@ Projeto desenvolvido como atividade prática da unidade curricular de programaç
 
 - Java 17+
 - IDE: VSCODE
-- Armazenamento: arquivo texto `events.data`
+- Armazenamento: arquivo texto `events.data`, `usuarios.data`
 
 ## 📚 Funcionalidades
 
@@ -23,7 +23,7 @@ Projeto desenvolvido como atividade prática da unidade curricular de programaç
 - Listagem de eventos disponíveis ✅
 - Confirmação e cancelamento de participação
 - Identificação de eventos ocorrendo no momento ou já passados
-- Ordenação de eventos por data e hora
+- Ordenação de eventos por data e hora ✅
 - Persistência em arquivo ✅
 - Carregamento automático de dados salvos ao iniciar o sistema ✅
 
