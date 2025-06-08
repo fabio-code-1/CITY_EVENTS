@@ -43,6 +43,16 @@ public class Login {
             Model_Eventos.listarEventos();
             break;
 
+          case 3:
+            System.out.println("===== CONFIRMAR PRESENCA NO EVENTO =====");
+            Model_Eventos.confirmarPresenca(scanner, nomeUsuario);
+            break;
+
+          case 4:
+            System.out.println("===== CANCELAR PRESENCA NO EVENTO =====");
+            Model_Eventos.cancelarPresenca(scanner, nomeUsuario);
+            break;
+
           case 8:
             System.out.print("Tem certeza que deseja excluir sua conta? (s/n): ");
             String confirmacao = scanner.nextLine();

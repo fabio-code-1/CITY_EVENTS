@@ -27,7 +27,7 @@ public class Model_Eventos {
     System.out.print("Digite o nome do evento: ");
     this.nome = scanner.nextLine();
 
-    System.out.print("Qual o endereço do evento: ");
+    System.out.print("Qual o endereco do evento: ");
     this.endereco = scanner.nextLine();
 
     System.out.print("Qual a categoria do evento (ex: palestra, workshop, curso): ");
@@ -61,7 +61,7 @@ public class Model_Eventos {
       }
     }
 
-    System.out.print("Descrição do evento: ");
+    System.out.print("Descricao do evento: ");
     this.descricao = scanner.nextLine();
 
     this.criador = criador;
@@ -72,6 +72,7 @@ public class Model_Eventos {
       // 1. Verifica se o evento já existe
       BufferedReader reader = new BufferedReader(new FileReader("DB/events.data"));
       String linha;
+      String participantes = "[" + criador + "]";
       boolean existe = false;
 
       // /// Verifica se o nome do evento já existe no arquivo
@@ -87,13 +88,13 @@ public class Model_Eventos {
 
       if (existe) {
         System.out.println("Erro: Evento '" + nome + "' ja existe!\n");
-        return; // não salva
+        return; // nao salva
       }
 
-      // 2. Salva se não existir
+      // 2. Salva se nao existir
       FileWriter writer = new FileWriter("DB/events.data", true);
       writer.write(nome + "|" + endereco + "|" + categoria + "|" + data + "|" + horario + "|" + descricao + "|"
-          + criador + "\n");
+          + criador + "|" + participantes + "\n");
       writer.close();
 
       System.out.println("Evento salvo com sucesso!\n");
@@ -115,7 +116,7 @@ public class Model_Eventos {
     }
 
     // Cria uma lista que vai guardar todas as linhas do arquivo já separadas ("|")
-    // Cada item da lista representa um evento completo, onde as informações estão
+    // Cada item da lista representa um evento completo, onde as informacoes estao
     // em um vetor de Strings.
     List<String[]> eventos = new ArrayList<>();
 
@@ -124,7 +125,7 @@ public class Model_Eventos {
 
       while ((linha = reader.readLine()) != null) {
         String[] partes = linha.split("\\|");
-        if (partes.length >= 7) {
+        if (partes.length >= 8) {
           eventos.add(partes);
         }
       }
@@ -136,7 +137,7 @@ public class Model_Eventos {
           LocalDateTime dataHoraB = LocalDateTime.parse(b[3] + " " + b[4], formatter);
           return dataHoraA.compareTo(dataHoraB);
         } catch (Exception e) {
-          return 0; // Se der erro, não muda a ordem
+          return 0; // Se der erro, nao muda a ordem
         }
       });
 
@@ -145,13 +146,13 @@ public class Model_Eventos {
 
         System.out.println("Criado por: " + e[6]);
         System.out.println("Nome: " + e[0]);
-        System.out.println("Endereço: " + e[1]);
+        System.out.println("Endereco: " + e[1]);
         System.out.println("Categoria: " + e[2]);
         System.out.println("Data: " + e[3]);
         System.out.println("Horário: " + e[4]);
-        System.out.println("Descrição: " + e[5]);
+        System.out.println("Descricao: " + e[5]);
 
-        // Verificação do status
+        // Verificacao do status
         if (dataHora.isBefore(agora)) {
           if (dataHora.toLocalDate().equals(agora.toLocalDate())) {
             System.out.println("Status: Evento HOJE (mas já passou o horário)");
@@ -168,11 +169,156 @@ public class Model_Eventos {
           System.out.println("Status: Evento futuro");
         }
 
+        System.out.println("Participantes: " + e[7]);
+
         System.out.println("-----------------------------");
       }
 
     } catch (IOException e) {
       System.out.println("Erro ao ler eventos: " + e.getMessage());
+    }
+  }
+
+  public static void confirmarPresenca(Scanner scanner, String nomeUsuario) {
+    System.out.print("Digite exatamente o NOME do evento que deseja confirmar presenca: ");
+    String nomeEvento = scanner.nextLine();
+
+    File arquivo = new File("DB/events.data");
+    File temp = new File("DB/events_temp.data");
+
+    boolean encontrou = false;
+    boolean jaConfirmado = false;
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(arquivo));
+        FileWriter writer = new FileWriter(temp)) {
+
+      String linha;
+      while ((linha = reader.readLine()) != null) {
+        String[] partes = linha.split("\\|");
+
+        if (partes.length >= 8 && partes[0].equalsIgnoreCase(nomeEvento)) {
+          encontrou = true;
+
+          String participantes = partes[7]; // Ex: [Míria,Luanna]
+
+          // Garante que tem colchetes
+          if (!participantes.startsWith("["))
+            participantes = "[" + participantes;
+          if (!participantes.endsWith("]"))
+            participantes = participantes + "]";
+
+          String nomesSemColchetes = participantes.replace("[", "").replace("]", "");
+          String[] nomes = nomesSemColchetes.split(",");
+
+          for (String nome : nomes) {
+            if (nome.trim().equalsIgnoreCase(nomeUsuario)) {
+              jaConfirmado = true;
+              break;
+            }
+          }
+
+          if (!jaConfirmado) {
+            participantes = participantes.replace("]", "," + nomeUsuario + "]");
+            partes[7] = participantes;
+            linha = String.join("|", partes);
+            System.out.println("Presenca confirmada com sucesso!");
+          } else {
+            System.out.println("Voce ja confirmou presenca nesse evento.");
+          }
+        }
+
+        writer.write(linha + "\n");
+      }
+
+    } catch (IOException e) {
+      System.out.println("Erro ao acessar o arquivo: " + e.getMessage());
+      return;
+    }
+
+    // Finaliza substituindo o arquivo original
+    if (arquivo.delete()) {
+      if (!temp.renameTo(arquivo)) {
+        System.out.println("Erro ao salvar alteracoes no arquivo.");
+      }
+    } else {
+      System.out.println("Erro ao apagar o arquivo antigo.");
+    }
+
+    if (!encontrou) {
+      System.out.println("Evento nao encontrado.");
+    }
+  }
+
+  public static void cancelarPresenca(Scanner scanner, String nomeUsuario) {
+    System.out.print("Digite exatamente o NOME do evento que deseja cancelar a presenca: ");
+    String nomeEvento = scanner.nextLine();
+
+    File arquivo = new File("DB/events.data");
+    File temp = new File("DB/events_temp.data");
+
+    boolean encontrou = false;
+    boolean participava = false;
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(arquivo));
+        FileWriter writer = new FileWriter(temp)) {
+
+      String linha;
+      while ((linha = reader.readLine()) != null) {
+        String[] partes = linha.split("\\|");
+
+        if (partes.length >= 8 && partes[0].equalsIgnoreCase(nomeEvento)) {
+          encontrou = true;
+
+          String participantes = partes[7]; // Ex: [Míria,Luanna]
+
+          if (!participantes.startsWith("["))
+            participantes = "[" + participantes;
+          if (!participantes.endsWith("]"))
+            participantes = participantes + "]";
+
+          String nomesSemColchetes = participantes.replace("[", "").replace("]", "");
+          String[] nomes = nomesSemColchetes.split(",");
+
+          List<String> novaLista = new ArrayList<>();
+
+          for (String nome : nomes) {
+            if (!nome.trim().equalsIgnoreCase(nomeUsuario)) {
+              novaLista.add(nome.trim());
+            } else {
+              participava = true;
+            }
+          }
+
+          // Atualiza participantes
+          String novaString = "[" + String.join(",", novaLista) + "]";
+          partes[7] = novaString;
+          linha = String.join("|", partes);
+
+          if (participava) {
+            System.out.println("Presenca cancelada com sucesso.");
+          } else {
+            System.out.println("Voce nao estava confirmado nesse evento.");
+          }
+        }
+
+        writer.write(linha + "\n");
+      }
+
+    } catch (IOException e) {
+      System.out.println("Erro ao acessar o arquivo: " + e.getMessage());
+      return;
+    }
+
+    if (arquivo.delete()) {
+      if (!temp.renameTo(arquivo)) {
+        System.out.println("Erro ao salvar alteracoes no arquivo.");
+      }
+    } else {
+      System.out.println("Erro ao apagar o arquivo antigo.");
+    }
+
+    if (!encontrou) {
+      System.out.println("Evento nao encontrado.");
     }
   }
 
