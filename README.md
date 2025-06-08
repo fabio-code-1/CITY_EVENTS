@@ -28,7 +28,7 @@ Projeto desenvolvido como atividade prática da unidade curricular de programaç
 - Persistência em arquivo ✅
 - Carregamento automático de dados salvos ao iniciar o sistema ✅
 
-## 🧱 Estrutura de Classes (em desenvolvimento)
+## 🧱 Estrutura de Classes
 
 - `Usuario`
 - `Evento`
