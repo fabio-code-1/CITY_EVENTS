@@ -42,10 +42,6 @@ Projeto desenvolvido como atividade prática da unidade curricular de programaç
 Os usuários são salvos em um arquivo chamado `usuarios.data`, que será carregado automaticamente ao iniciar o programa.
 Os eventos são salvos em um arquivo chamado `events.data`, que será carregado automaticamente ao iniciar o programa.
 
-## 📊 Diagrama de Classes
-
-_(A ser incluído — pode ser feito via draw.io ou PlantUML)_
-
 ## 🚀 Execução
 
 Compile e execute o projeto a partir da classe `Main`. Interaja pelo menu em console.
